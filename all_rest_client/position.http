@@ -1,0 +1,26 @@
+@baseUrl =http://localhost:3000
+
+### GET ALL POSITION
+GET {{baseUrl}}/position/all
+
+### GET USER BY ID
+GET {{baseUrl}}/position/3
+
+### CREATE A USER
+POST {{baseUrl}}/position
+Content-Type: application/json
+
+{
+    "name":"a2"
+}
+
+### UPDATE A USER BY ID
+PUT {{baseUrl}}/position/4
+Content-Type: application/json
+
+{
+    "name":""
+}
+
+### DELETE A USER BY ID
+DELETE {{baseUrl}}/position/3

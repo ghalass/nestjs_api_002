@@ -1,0 +1,25 @@
+@baseUrl=http://localhost:3000
+@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiZ2FsYXNAZW1haWwuY29tIiwiaWF0IjoxNzYxNDkyMzY3LCJleHAiOjE3NjQwODQzNjd9.6G1pHJ68UpZUOKCnAhpoPa7_ART35nxjx2kGj852NU8
+### REGISTER A USER
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName":"med",
+    "lastName":"galas",
+    "email":"galas@email.com",
+    "password":"122345678"
+}
+
+### LOGIN A USER
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email":"galas@email.com",
+    "password":"122345678"
+}
+
+### GET USER PROFILE
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{access_token}}
