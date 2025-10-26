@@ -1,7 +1,12 @@
 @baseUrl =http://localhost:3000
+@access_token_user=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBlbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2MTQ5NzY3NCwiZXhwIjoxNzY0MDg5Njc0fQ.cqWivLZw77KJYwF1qbBbpZqk0yZCprKyIX2BARo078k
+@access_token_admin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoiYWRtaW5AZW1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzYxNDk3NzAxLCJleHAiOjE3NjQwODk3MDF9.NDz_rF4hHyZgEgnQMQfkzh-4pBwqKV-cJ8XOOMVp65o
+
 
 ### GET ALL POSITION
 GET {{baseUrl}}/position/all
+Authorization: Bearer {{access_token_user}}
+
 
 ### GET USER BY ID
 GET {{baseUrl}}/position/3
@@ -22,5 +27,6 @@ Content-Type: application/json
     "name":""
 }
 
-### DELETE A USER BY ID
-DELETE {{baseUrl}}/position/3
+### DELETE A POSITION BY ID
+DELETE {{baseUrl}}/position/5
+Authorization: Bearer {{access_token_admin}}

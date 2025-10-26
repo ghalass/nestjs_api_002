@@ -1,6 +1,13 @@
 import { Optional } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import { Role } from '../enums/role.enum';
 
 export class UpdateUserDto {
   @IsString({
@@ -81,4 +88,11 @@ export class UpdateUserDto {
     required: true,
   })
   password: string;
+
+  @IsOptional()
+  @ApiProperty({
+    description: "Le rôl de l'utilisateur",
+    example: 'ADMIN',
+  })
+  role: Role;
 }

@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,16 +9,20 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import refreshJwtConfig from './config/refresh-jwt.config';
+import type { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     readonly prisma: PrismaService,
-    private readonly jwt: JwtService,
+    private readonly jwtService: JwtService,
+    @Inject(refreshJwtConfig.KEY)
+    private refreshTokenConfig: ConfigType<typeof refreshJwtConfig>,
   ) {}
 
   async register(createUserDto: CreateUserDto) {
-    const { firstName, lastName, email, password } = createUserDto;
+    const { firstName, lastName, email, password, role } = createUserDto;
     const existingUser = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -37,18 +42,20 @@ export class AuthService {
         lastName,
         email,
         password: hashedPassword,
+        role,
       },
       select: {
         id: true,
         firstName: true,
         lastName: true,
         email: true,
+        role: true,
         createdAt: true,
       },
     });
 
-    const payload = { sub: user.id, email: user.email };
-    const access_token = this.jwt.sign(payload);
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    const access_token = this.jwtService.sign(payload);
 
     return { user, access_token };
   }
@@ -65,8 +72,9 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new ConflictException('Email ou mot de passe incorrect');
     }
-    const payload = { sub: user.id, email: user.email };
-    const access_token = this.jwt.sign(payload);
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    const access_token = this.jwtService.sign(payload);
+    const refreshToken = this.jwtService.sign(payload, this.refreshTokenConfig);
 
     return {
       user: {
@@ -74,9 +82,11 @@ export class AuthService {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        role: user.role,
         createdAt: user.createdAt,
       },
       access_token,
+      refreshToken,
     };
   }
 
@@ -92,6 +102,7 @@ export class AuthService {
         firstName: true,
         lastName: true,
         email: true,
+        role: true,
         createdAt: true,
       },
     });
@@ -101,5 +112,14 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async refreshToken(userId: number) {
+    const payload = { sub: userId };
+    const access_token = this.jwtService.sign(payload);
+    return {
+      id: userId,
+      access_token,
+    };
   }
 }

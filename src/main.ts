@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Request, Response, NextFunction } from 'express';
 import chalk from 'chalk';
+import { PrismaExceptionFilter } from './filters/prisma-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -36,6 +37,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  app.useGlobalFilters(new PrismaExceptionFilter()); // 👈 activation globale
 
   const config = new DocumentBuilder()
     .setTitle('NESTJS API 002')

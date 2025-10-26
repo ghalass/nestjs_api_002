@@ -1,25 +1,35 @@
 @baseUrl=http://localhost:3000
-@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiZ2FsYXNAZW1haWwuY29tIiwiaWF0IjoxNzYxNDkyMzY3LCJleHAiOjE3NjQwODQzNjd9.6G1pHJ68UpZUOKCnAhpoPa7_ART35nxjx2kGj852NU8
-### REGISTER A USER
-POST {{baseUrl}}/auth/register
-Content-Type: application/json
-
-{
-    "firstName":"med",
-    "lastName":"galas",
-    "email":"galas@email.com",
-    "password":"122345678"
-}
+@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTc2MTUwNjk1MCwiZXhwIjoxNzYxNTA3MDEwfQ.GAZupTAs9dCtcYc52-T_1rDQzzeqg8HxLZ7_o5f70Ts
+@refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoiYWRtaW5AZW1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzYxNTA2ODQyLCJleHAiOjE3NjIxMTE2NDJ9.s_j9U63vSLMKpv9_qHp8_AiW_UaQ6yMJOsqUJGIDksw
 
 ### LOGIN A USER
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email":"galas@email.com",
+    "email":"admin@email.com",
     "password":"122345678"
 }
 
 ### GET USER PROFILE
 GET {{baseUrl}}/auth/profile
 Authorization: Bearer {{access_token}}
+
+### REFRESH TOKEN
+POST {{baseUrl}}/auth/refresh
+Authorization: Bearer {{refresh_token}}
+
+
+### RESISTER USER
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName":"admin",
+    "lastName":"admin",
+    "email":"admin@email.com",
+    "password":"122345678",
+    "role":"ADMIN"
+}
+
+
