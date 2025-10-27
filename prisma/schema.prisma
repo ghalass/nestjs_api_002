@@ -42,6 +42,8 @@ model User {
   password  String
   role      Role     @default(USER)
   createdAt DateTime @default(now()) @map("created_at")
+
+  hashedRefreshToken String?
 }
 
 enum Role {

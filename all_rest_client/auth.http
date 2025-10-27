@@ -1,13 +1,13 @@
 @baseUrl=http://localhost:3000
-@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTc2MTUwNjk1MCwiZXhwIjoxNzYxNTA3MDEwfQ.GAZupTAs9dCtcYc52-T_1rDQzzeqg8HxLZ7_o5f70Ts
-@refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoiYWRtaW5AZW1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzYxNTA2ODQyLCJleHAiOjE3NjIxMTE2NDJ9.s_j9U63vSLMKpv9_qHp8_AiW_UaQ6yMJOsqUJGIDksw
+@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTc2MTU2MTUxMywiZXhwIjoxNzYxNTYxNTczfQ.P1nQ3iXP_o1MNQORKfd4lpgTpiiuVSPA7mso2p0krMw
+@refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTc2MTU2MTUxMywiZXhwIjoxNzYyMTY2MzEzfQ.XZjlv3ojh0Pb8ensnNy6TTb5VKoPK6N57_u2zkN0UWo
 
-### LOGIN A USER
+### LOGIN USER
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email":"admin@email.com",
+    "email":"user@email.com",
     "password":"122345678"
 }
 
@@ -17,7 +17,12 @@ Authorization: Bearer {{access_token}}
 
 ### REFRESH TOKEN
 POST {{baseUrl}}/auth/refresh
-Authorization: Bearer {{refresh_token}}
+Authorization: Bearer {{refreshToken}}
+
+
+### SIGNOUT USER
+POST {{baseUrl}}/auth/signout
+Authorization: Bearer {{access_token}}
 
 
 ### RESISTER USER
